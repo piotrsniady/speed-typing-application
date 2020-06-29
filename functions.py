@@ -2,6 +2,7 @@ import time
 import random
 from datetime import datetime
 import os
+from typing import List
 
 
 def create_history_file():
@@ -11,9 +12,10 @@ def create_history_file():
         print("Creating a history file.")
         with open(file=history_file, mode="w") as hf:
             hf.close()
+    return None
 
 
-def save_history(session, generated_sent, answer, time_taken, accuracy):
+def save_history(session: int, generated_sent: List[str], answer: str, time_taken: float, accuracy: float) -> None:
     with open(file="history.txt", mode="a+") as file:
         file.write(
             f"Session {session},"
@@ -23,9 +25,10 @@ def save_history(session, generated_sent, answer, time_taken, accuracy):
             f"Accuracy {accuracy},"
             f"Save date {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}\n"
         )
+    return None
 
 
-def get_random_sentence(number_of_sentences):
+def get_random_sentence(number_of_sentences: int) -> list:
     gen_sent_list = []
     with open(file="sentences.txt", mode="r") as file:
         sentences = file.read().splitlines()
@@ -41,13 +44,14 @@ def countdown():
     for i in range(3, 0, -1):
         time.sleep(1)
         print(i)
+    return None
 
 
-def remove_spaces(sent):
+def remove_spaces(sent: str) -> List[str]:
     return ' '.join(list(sent)).split()
 
 
-def compare_sentences(gen_sent, answer_sent):
+def compare_sentences(gen_sent: List[str], answer_sent: List[str]) -> int:
     count = 0
     for x, y in zip(gen_sent, answer_sent):
         if x == y:
@@ -55,7 +59,7 @@ def compare_sentences(gen_sent, answer_sent):
     return count
 
 
-def validate_input(input_val):
+def validate_input(input_val: str) -> bool:
     with open(file="sentences.txt", mode="w+") as sf:
         text = sf.readlines()
     max_len = len(text)
@@ -112,9 +116,10 @@ def typing_program():
                          answer=answer, time_taken=time_taken, accuracy=accuracy)
     else:
         print("Turning back to main menu.")
+    return None
 
 
-def option_validation(opt):
+def option_validation(opt: str) -> bool:
     opt_list = ["1", "2"]
     if not opt.isnumeric():
         print("WARNING. Wrong type of input. Expected number.")
