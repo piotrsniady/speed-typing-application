@@ -71,7 +71,7 @@ def validate_input(input_val: str) -> bool:
         print("Wrong argument. Expected value greater than 0.")
         return False
     elif int(input_val) > max_len:
-        print(f"WARNING. Wrong number of sentences to select.\nMax value is {max_len}.")
+        print(f"WARNING. Wrong number of sentences to select.\nMax expected value is {max_len}.")
         return False
     else:
         return True
@@ -82,9 +82,17 @@ def typing_program():
 
     info = input("Are you ready (yes/no):\n")
     if info not in ["yes", "no"]:
-        print("Wrong option. Expected 'yes' or 'no'.")
-        quit()
+        print("Wrong option. Expected 'yes' or 'no' option.")
+        show_menu()
     elif info == "yes":
+
+        with open(file="sentences.txt", mode="r") as f:
+            sentences = f.readlines()
+        if len(sentences) == 0:
+            print("WARNING. Empty sentences file.")
+            print("Turning back to main menu.")
+            show_menu()
+
         num_of_sent = input("Enter the number of sentences: ")
 
         while not validate_input(input_val=num_of_sent):
@@ -139,12 +147,12 @@ def show_menu():
         print("[2] Exit program.\n")
 
         option = input("Enter an option: ")
-        print(type(option))
+
         while not option_validation(opt=option):
             option = input("Enter an option: ")
 
         if option == "1":
             typing_program()
-        else:
+        elif option == "2":
             print("Closing program.")
-            menu_loop = 0
+            quit()
