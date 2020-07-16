@@ -60,7 +60,7 @@ def compare_sentences(gen_sent: List[str], answer_sent: List[str]) -> int:
 
 
 def validate_input(input_val: str) -> bool:
-    with open(file="sentences.txt", mode="w+") as sf:
+    with open(file="sentences.txt", mode="r") as sf:
         text = sf.readlines()
     max_len = len(text)
 
